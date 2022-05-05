@@ -9,6 +9,9 @@
         <el-form-item prop="password">
           <el-input v-model="form.password" placeholder="请输入密码" show-password></el-input>
         </el-form-item>
+        <el-form-item prop="age">
+          <el-input v-model="form.age" placeholder="年龄"></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button @click="register()" type="primary">注册</el-button>
         </el-form-item>
@@ -29,7 +32,8 @@ export default {
       // 数据
       form: {
         username: '',
-        password: ''
+        password: '',
+        age: ''
       },
       // 规则
       rules: {
@@ -38,6 +42,9 @@ export default {
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        age: [
+          { required: true, message: '请输入年龄', trigger: 'blur' }
         ]
       }
     }
