@@ -5,17 +5,18 @@
         background-color="#023"
         style="border-right:none"
         text-color="#fff"
-        default-active="/"
+        default-active="$route.path"
+        router
       >
         <el-menu-item index="/">
           <i class="el-icon-s-home"></i>
           <span slot="title">用户详情</span>
         </el-menu-item>
-        <el-menu-item index="/article">
+        <el-menu-item index="/search">
           <i class="el-icon-document"></i>
           <span slot="title">图书搜索</span>
         </el-menu-item>
-        <el-menu-item index="/publish">
+        <el-menu-item index="/need">
           <i class="el-icon-s-promotion"></i>
           <span slot="title">提交需求</span>
         </el-menu-item>

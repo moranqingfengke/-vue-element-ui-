@@ -8,8 +8,10 @@ import Register from '@/views/Register.vue'
 import Login from '@/views/Login.vue'
 // 布局路由
 import Layout from '@/views/Layout.vue'
-// 概览路由
+// 个人信息路由
 import Home from '@/views/Home.vue'
+// 图书路由
+import Search from '@/views/Search.vue'
 
 Vue.use(VueRouter)
 
@@ -23,7 +25,8 @@ const routes = [
     path: '/',
     component: Layout,
     children: [
-      { path: '/', component: Home }
+      { path: '/', component: Home },
+      { path: '/search', component: Search }
     ]
   }
 ]
@@ -37,7 +40,7 @@ router.beforeEach((to, from, next) => {
   // 获取token
   const token = auth.getToken()
   // 不是访问登录，有没有token，跳转登录页面
-  if (to.path !== '/login' && !token) return next('/login')
+  if (to.path !== '/login' && to.path !== '/register' && !token) return next('/login')
   // 其他情况放行
   next()
 })
