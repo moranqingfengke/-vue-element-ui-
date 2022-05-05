@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-card class="card">
-      <h3>注册</h3>
+      <h3>登录</h3>
       <el-form ref="form" :model="form" :rules="rules">
         <el-form-item prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
@@ -10,10 +10,10 @@
           <el-input v-model="form.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="register()" type="primary">注册</el-button>
+          <el-button @click="login()" type="primary">登录</el-button>
         </el-form-item>
       </el-form>
-      <p @click="login()">登录</p>
+      <p @click="register()">注册</p>
     </el-card>
   </div>
 </template>
@@ -21,9 +21,11 @@
 <script>
 
 import qs from 'qs'
+// 导入token处理函数
+import auth from '@/utils/auth.js'
 
 export default {
-  name: 'Register',
+  name: 'Login',
   data () {
     return {
       // 数据
@@ -44,29 +46,25 @@ export default {
   },
   methods: {
     async register () {
-      const res = await this.$http.post('/api/reguser', qs.stringify(this.form))
+      this.$router.push('/register')
+    },
+    async login () {
+      const res = await this.$http.post('/api/login', qs.stringify(this.form))
       if (res.data.status === 0) {
         this.$message({
           showClose: true,
-          message: '注册成功',
+          message: '登录成功',
           type: 'success'
         })
-      } else if (res.data.status === 1) {
-        this.$message({
-          showClose: true,
-          message: '注册失败',
-          type: 'error'
-        })
+        this.$router.push('/')
+        auth.setToken(1)
       } else {
         this.$message({
           showClose: true,
-          message: '用户名已存在，请更换！',
+          message: '用户名或密码错误',
           type: 'error'
         })
       }
-    },
-    login () {
-      this.$router.push('/login')
     }
   }
 }
