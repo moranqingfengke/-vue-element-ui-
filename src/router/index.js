@@ -12,6 +12,8 @@ import Layout from '@/views/Layout.vue'
 import Home from '@/views/Home.vue'
 // 图书路由
 import Search from '@/views/Search.vue'
+// 需求路由
+import Need from '@/views/Need.vue'
 
 Vue.use(VueRouter)
 
@@ -26,7 +28,8 @@ const routes = [
     component: Layout,
     children: [
       { path: '/', component: Home },
-      { path: '/search', component: Search }
+      { path: '/search', component: Search },
+      { path: '/need', component: Need }
     ]
   }
 ]
