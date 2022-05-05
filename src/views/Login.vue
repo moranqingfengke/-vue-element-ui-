@@ -56,8 +56,8 @@ export default {
           message: '登录成功',
           type: 'success'
         })
+        auth.setToken(this.form.username)
         this.$router.push('/')
-        auth.setToken(1)
       } else {
         this.$message({
           showClose: true,
