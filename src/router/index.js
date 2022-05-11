@@ -14,6 +14,8 @@ import Home from '@/views/Home.vue'
 import Search from '@/views/Search.vue'
 // 需求路由
 import Need from '@/views/Need.vue'
+// 归还路由
+import Borrow from '@/views/Borrow.vue'
 
 Vue.use(VueRouter)
 
@@ -29,7 +31,8 @@ const routes = [
     children: [
       { path: '/', component: Home },
       { path: '/search', component: Search },
-      { path: '/need', component: Need }
+      { path: '/need', component: Need },
+      { path: '/borrow', component: Borrow }
     ]
   }
 ]

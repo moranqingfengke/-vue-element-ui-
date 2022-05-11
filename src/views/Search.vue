@@ -13,9 +13,11 @@
         <el-table-column prop="bookauthor" label="作者"></el-table-column>
         <el-table-column prop="bookaddress" label="出版社"></el-table-column>
         <el-table-column prop="bookprice" label="价格"></el-table-column>
+        <el-table-column prop="bookstate" label="状态"></el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button @click="detail(scope.row.bookname)" type="primary" icon="el-icon-more" circle plain></el-button>
+          <template slot-scope="a" v-if="!userstate">
+            <el-button @click="detail(a.row.bookname)" type="primary" icon="el-icon-more" circle plain></el-button>
+            <el-button @click="borrow(a.row.bookname)" type="primary" circle plain>借阅</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -26,6 +28,8 @@
 <script>
 
 import qs from 'qs'
+// 导入token处理函数
+import auth from '@/utils/auth.js'
 
 export default {
   name: 'Search',
@@ -36,7 +40,13 @@ export default {
       // 书
       books: [],
       // 详情
-      bookdetail: ''
+      bookdetail: '',
+      // 用户
+      username: '',
+      // 用户状态（是否借过书）
+      userstate: '',
+      // 图书状态
+      bookstate: ''
     }
   },
   methods: {
@@ -68,10 +78,29 @@ export default {
         type: 'success',
         duration: 0
       })
+    },
+    // 借阅
+    async borrow (bookname) {
+      const res = await this.$http.post('/borrow/borrowbook', qs.stringify({ bookname: bookname, username: this.username }))
+      if (res.data.status === 0) {
+        this.$message({
+          showClose: true,
+          message: '借书成功',
+          type: 'success'
+        })
+        this.getAllBooks()
+      }
+    },
+    // 获取用户状态
+    async getUser () {
+      const res = await this.$http.post('/api/userdetail', qs.stringify({ username: this.username }))
+      this.userstate = res.data.message[0].userstate
     }
   },
   created () {
     this.getAllBooks()
+    this.username = auth.getToken()
+    this.getUser()
   }
 }
 </script>
